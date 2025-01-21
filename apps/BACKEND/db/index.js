@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const connectDB = async () => {
 
         await mongoose.connect(process.env.CONNECTION_LINK)
-        
-    
 };
 
 // Connect to MongoDB
@@ -15,6 +13,7 @@ connectDB();
 const AdminSchema = new mongoose.Schema({
     username: String,
     password: String,
+    email: String
 });
 
 const UserSchema = new mongoose.Schema({
