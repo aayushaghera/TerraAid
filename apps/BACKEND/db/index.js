@@ -21,11 +21,33 @@ const UserSchema = new mongoose.Schema({
     password: String,
 });
 
+
+const paymentSchema = new mongoose.Schema({
+    razorpay_order_id: {
+      type: String,
+      
+    },
+    razorpay_payment_id: {
+      type: String,
+      
+    },
+    razorpay_signature: {
+      type: String,
+      
+    },
+  });
+
 const Admin = mongoose.model('Admin', AdminSchema);
 const User = mongoose.model('User', UserSchema);
+const Payment = mongoose.model("Payment", paymentSchema);
 
 module.exports = {
     Admin,
     User,
-    connectDB
+    Payment,
+    connectDB,
+    
 };
+
+
+
