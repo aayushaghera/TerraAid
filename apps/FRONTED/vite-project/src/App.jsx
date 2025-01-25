@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [amount, setAmount] = useState("");
+
+  const checkoutHandler = async () => {
+    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+      alert("Please enter a valid amount!");
+      return;
+    }
+
+    try {
+      // Fetch the Razorpay key
+      // const keyResponse = await fetch("http://localhost:1200/api/getkey");
+      // const keyData = await keyResponse.json();
+    
+      // Create an order
+      const orderResponse = await fetch("http://localhost:1200/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount }),
+      });
+      const orderData = await orderResponse.json();
+       
+       
+      console.log(orderData);
+
+      const options = {
+        //key: keyData.key,
+        amount: orderData.order.amount,
+        currency: "INR",
+        name: "NGO",
+        description: "Support a cause",
+        order_id: orderData.order.id,
+        callback_url: "http://localhost:1200/api/paymentverification",
+        prefill: {
+          name: "Donor",
+          email: "donor@example.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#121212",
+        },
+      };
+
+      const razor = new window.Razorpay(options);
+      razor.open();
+    } catch (error) {
+      console.error( error);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="container">
+      <h1 className="title">Donate to a Cause</h1>
+      <input
+        type="text"
+        placeholder="Enter amount in INR"
+        value={amount}
+        onChange={(e) => {
+          const value = e.target.value;
+          if (/^\d*$/.test(value)) {
+            setAmount(value);
+          }
+        }}
+      />
+      <button onClick={checkoutHandler} className="donate-button">
+        Donate
+      </button>
+    </div>
+  );
+};
 
-export default App
+export default App;
