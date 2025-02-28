@@ -33,6 +33,7 @@ router.post("/CreatePost", async (req, res) => {
     }
   });
   
+
 //Create Razorpay Account
 const createRazorpayAccount = async (ngoData) => {
   try {
