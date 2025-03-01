@@ -53,6 +53,10 @@ function Footer() {
                     </ul>
                 </div>
             </div>
+
+            <div className="w-full mt-2 border-t border-mine-shaft-800 pt-4 text-center text-mine-shaft-500 text-md">
+                © copyright 2025<span className='text-bright-sun-400'> TERRAAID</span> | All rights reserved
+            </div>
         </div>
     );
 }
