@@ -2,8 +2,18 @@ import { IconProgressHelp } from '@tabler/icons-react';
 import { IconBrandFacebook } from '@tabler/icons-react';
 import { IconBrandInstagram } from '@tabler/icons-react';
 import { IconBrandX } from '@tabler/icons-react';
+import { Link, useLocation } from 'react-router-dom';
 
 function Footer() {
+
+    const location = useLocation();
+
+    // If pathname is "/SignUp" or "/Login", return null (do not render header)
+   if (location.pathname === "/SignUp" || location.pathname === "/Login") {
+    return null;
+      }
+
+    
     return (
         <div className="pt-20 pb-5  flex flex-wrap gap-10 bg-mine-shaft-950 font-['Poppins'] ">
             {/* TerraAid Section */}
