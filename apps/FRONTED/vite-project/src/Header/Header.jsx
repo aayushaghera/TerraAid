@@ -4,10 +4,18 @@ import { IconBell } from '@tabler/icons-react';
 import { IconSettings } from '@tabler/icons-react';
 import { Avatar, Indicator } from '@mantine/core';
 import NavLinks from './NavLinks';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import ProfileMenu from './ProfileMenu';
 
 function Header ()
 {
+    const location = useLocation();
+
+    // If pathname is "/SignUp" or "/Login", return null (do not render header)
+   if (location.pathname === "/SignUp" || location.pathname === "/Login") {
+    return null;
+    }
+
     return(
     <div className="w-full bg-black px-6 text-white h-20 flex justify-between items-center bg-mine-shaft-950 ">
         <div className='flex gap-3 items-center text-bright-sun-400 '>
@@ -19,12 +27,15 @@ function Header ()
 
         <div className='flex gap-3 items-center'>
         
-            <div className='flex items-center gap-2'>
+            {/* <div className='flex items-center gap-2'>
             <div>aayush</div>  
-            <Link to="/UserProfile">  
             <Avatar src='avatar.png'></Avatar>
-            </Link> 
-            </div>
+            </div> */}
+            {/* <Link to="/UserProfile">  
+            <Avatar src='avatar.png'></Avatar>
+            </Link>  */}
+
+            <ProfileMenu></ProfileMenu>
         
         <div className='bg-mine-shaft-900 p-1.5 rounded-full'>
         <IconSettings stroke={2} /> 
