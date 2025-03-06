@@ -19,6 +19,17 @@ router.post("/organization-signup", async (req, res) => {
         return res.status(400).json({ message: "Passwords do not match" });
     }
 
+        const response = await fetch(process.env.NGO_API);
+    const data = await response.json();
+
+    if (data.extract_data) {
+        const organization = data.extract_data.find(org => org['Email id'] === email);
+
+    if (!organization) {
+        return res.status(403).json({ message: "Email not found in the authorized organizations list" });
+    }
+    }
+
     const existingOrganization = await Organization.findOne({ email });
     if (existingOrganization) {
         return res.status(409).json({ message: "Email is already registered" });

@@ -3,6 +3,8 @@ const { Router } = require("express");
 const jwt = require("jsonwebtoken");
 const { Donor } = require("../db"); // Assuming Donor model exists
 const router = Router();
+const { z } = require("zod");
+
 
 // Donor signup route
 router.post("/donor-signup", async (req, res) => {
@@ -19,6 +21,20 @@ router.post("/donor-signup", async (req, res) => {
     if (password !== confirmPassword) {
         return res.status(400).json({ message: "Passwords do not match" });
     }
+    
+
+    const panSchema = z.object({
+        pan: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]$/, { message: "Invalid PAN format" }),
+    });
+    
+    const validationResult = panSchema.safeParse({ pan });
+
+    console.log(validationResult);
+    
+    if (!validationResult.success) {
+        return res.status(400).json({ message: validationResult.error.errors[0].message });
+    }
+    
 
     const existingDonor = await Donor.findOne({ email });
     if (existingDonor) {
