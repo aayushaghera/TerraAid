@@ -1,78 +1,15 @@
-// import { TextInput } from '@mantine/core';
-// import { IconAt } from '@tabler/icons-react';
-// import { PasswordInput } from '@mantine/core';
-// import { IconLock } from '@tabler/icons-react';
-// import { Checkbox } from '@mantine/core';
-// import { Button } from '@mantine/core';
-// import { Link } from 'react-router-dom';
-
-// function SignUp()
-// {
-//    return <div className=" w-1/2 px-20 flex flex-col justify-center gap-3">
-//         <div className="text-2xl">Create Account</div>
-//         <TextInput withAsterisk
-//         label="Organization Name"
-//         placeholder="Organization Name"
-//         classNames={{
-//             input: "border focus:border-bright-sun-400 ",
-//         }}
-//         />
-
-//         <TextInput withAsterisk
-//         leftSection={  <IconAt size={16} />}
-//         label="Email"
-//         placeholder="Your email"
-//         classNames={{
-//             input: "border focus:border-bright-sun-400 ",
-//         }}
-//         />
-
-//         <PasswordInput
-//         withAsterisk
-//         leftSection={<IconLock size={18} stroke={1.5} />}
-//         label="Password"
-//         placeholder="Password"
-//         classNames={{
-//             input: "border focus:border-bright-sun-400",
-//         }}
-//         />
-
-//         <PasswordInput
-//         withAsterisk
-//         leftSection={<IconLock size={18} stroke={1.5} />}
-//         label=" Confirm Password"
-//         placeholder=" Confirm Password"
-//         />
-
-//         <Checkbox
-//         label="I accept terms & condition"
-//         color="yellow"
-//         />
-
-//         <Button  variant="filled" color="yellow">SignUp</Button>
-
-//         <div className='mx-auto'>Have an account ? <Link to="/Login" className='text-bright-sun-400'>Login</Link></div>
-
-        
-        
-
-//    </div>
-// }
-
-// export default SignUp;
-
-
-
-
 
 import { useState } from "react";
 import { TextInput, PasswordInput, Checkbox, Button, Radio } from "@mantine/core";
 import { IconAt, IconLock } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, } from "react-router-dom";
+
 
 function SignUp() {
   // State to track whether the user is signing up as a Donor or Organization
   const [userType, setUserType] = useState("organization");
+  const [message, setMessage] = useState(""); // Message state
+  const [messageType, setMessageType] = useState(null);
 
   // State for form inputs
   const [formData, setFormData] = useState({
@@ -102,6 +39,15 @@ function SignUp() {
 
       const data = await response.json();
       console.log("Signup response:", data);
+
+      if (response.ok) {
+        
+        setMessage("SignUp successful!");
+        setMessageType("success"); // Ensure it's set properly
+      } else {
+        setMessage(data.message || "SignUp failed. Please try again.");
+        setMessageType("error");
+      }
     } catch (error) {
       console.error("Error signing up:", error);
     }
@@ -110,6 +56,14 @@ function SignUp() {
   return (
     <div className="w-1/2 px-20 flex flex-col justify-center gap-3">
       <div className="text-2xl">Create Account</div>
+
+
+
+      {message && messageType && (
+        <div className={`p-2 rounded-md text-center ${messageType === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"}`}>
+          {message}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}className="flex flex-col gap-3">
         <TextInput
