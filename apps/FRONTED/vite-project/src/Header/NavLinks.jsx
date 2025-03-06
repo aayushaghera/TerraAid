@@ -8,7 +8,8 @@ function NavLinks()
         { name:"Mission",url:"/mission"},
         { name:"About",url:"/About"},
         { name:"Contact",url:"/Contact"},
-        { name:"Dashboard",url:"/Dashboard"}
+        { name:"Dashboard",url:"/Dashboard"},
+        { name:"SignUp",url:"/SignUp"}
 
     ]
     const location = useLocation();
