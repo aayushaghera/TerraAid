@@ -5,10 +5,11 @@ const { z } = require("zod");
 const { create_post } = require('../db'); // Import User model from db/index.js
 const router = Router();
 const axios = require("axios");
-const cors = require("cors");
+const cors = require('cors');
+router.use(cors());
 const {NGO} = require('../db');
 
-// Create NGO (POST Route)
+//Create NGO (POST Route)
 router.post("/CreatePost", async (req, res) => {
     try {
         console.log("Request Body:", req.body); // Log request data
@@ -22,7 +23,11 @@ router.post("/CreatePost", async (req, res) => {
       res.status(500).json({ message: "Error creating NGO", error: err.message });
     }
   });
-  
+
+
+
+ 
+
   // Get All NGOs (GET Route)
   router.get("/GetPost", async (req, res) => {
     try {
@@ -93,7 +98,6 @@ const createRazorpayContact = async (contactDetails) => {
     throw new Error(error.response?.data?.error?.description || "Contact creation failed!");
   }
 };
-
 // Create Fund Account
 const createFundAccount = async (contactId, bankDetails, contactName) => {
   try {
@@ -126,6 +130,9 @@ const createFundAccount = async (contactId, bankDetails, contactName) => {
 
 router.post("/register-ngo", async (req, res) => {
     console.log("Request Body:", req.body);
+
+    const latestNGO = await create_post.findOne().sort({ _id: -1 });
+
   let { name, email, phone, referenceId, legalBusinessName, businessType, contactName, address, pan, gst, bankDetails, contactDetails } = req.body;
 
   if (!contactDetails || !contactDetails.name || !contactDetails.email || !contactDetails.contact || !contactDetails.type || !contactDetails.reference_id) {
@@ -150,9 +157,10 @@ router.post("/register-ngo", async (req, res) => {
 
     const newNGO = new NGO({
       name, email, phone, referenceId, legalBusinessName, businessType, contactName, address, pan, gst,
-      bankDetails, contactId, fundAccountId, contactDetails, razorpayAccountId: razorpayAccount.id,
+      bankDetails, contactId, fundAccountId, contactDetails, razorpayAccountId: razorpayAccount.id,ngoId: latestNGO._id,
     });
-
+    
+    
     await newNGO.save();
     res.status(201).json({ message: "NGO registered successfully!", ngo: newNGO });
   } catch (error) {
@@ -166,4 +174,32 @@ router.get("/ngos", async (req, res) => {
 });
 
 
+router.get("/getNGOByPostId/:id", async (req, res) => {
+  try {
+    const ngo = await NGO.findOne({ ngoId: req.params.id }); // ✅ Query NGO schema
+    if (!ngo) {
+      return res.status(404).json({ message: "NGO not found for this Post" });
+    }
+    res.json(ngo);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching NGO", error: error.message });
+  }
+});
+
+
+router.get("/getPOSTByPostId/:id", async (req, res) => {
+  try {
+    const post = await create_post.findOne({ _id: req.params.id }); // ✅ Use `_id`
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching post", error: error.message });
+  }
+});
+
+
 module.exports = router;
+
+
