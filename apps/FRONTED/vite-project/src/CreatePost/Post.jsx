@@ -1,3 +1,4 @@
+
 import BaseDemo from "./BaseDemo";
 import InputWithLabel from "./InputWithLabe";
 import TextEditor from "./TextEditor";
@@ -5,6 +6,7 @@ import { SimpleSelect } from './SimpleSelect';
 import { BasicSelect } from "./BasicSelect";
 import { Button } from '@mantine/core';
 import { useState } from "react";
+
 
 function Post() {
   const [formData, setFormData] = useState({
@@ -48,38 +50,41 @@ function Post() {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-  
+
     setFormData((prevData) => {
       const updatedData = structuredClone(prevData); // Deep copy
-      const keys = id.split(".");  // ✅ Now splitting by dot
-  
+      const keys = id.split(".");  // Split by dot
+
       let current = updatedData;
       for (let i = 0; i < keys.length - 1; i++) {
         if (!current[keys[i]]) current[keys[i]] = {}; // Ensure path exists
         current = current[keys[i]];
       }
-  
+
       current[keys[keys.length - 1]] = value;
-  
+
       return updatedData;
     });
   };
-  ;
+
+  const isFormComplete = (data) => {
+    for (const key in data) {
+      if (typeof data[key] === "object" && !Array.isArray(data[key])) {
+        if (!isFormComplete(data[key])) return false;
+      } else if (data[key] === "") {
+        return false;
+      }
+    }
+    return true;
+  };
 
   const handleSubmit = async () => {
-    // Convert formData to a string and check if it contains empty values
-    const isFormComplete = Object.values(formData).every((value) => {
-      if (typeof value === "object") {
-        return Object.values(value).every((subValue) => subValue !== "");
-      }
-      return value !== "";
-    });
-  
-    if (!isFormComplete) {
+    if (!isFormComplete(formData)) {
       alert("Please complete all details before submitting.");
-      return; // Stop execution if form is incomplete
+      return;
     }
-    console.log("Final formData before submission:", formData); // Debugging
+
+    console.log("Final formData before submission:", formData);
 
     try {
       const response1 = await fetch("http://localhost:1200/Post/CreatePost", {
@@ -93,7 +98,11 @@ function Post() {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!response1.ok) throw new Error("Failed to post NGO details");
+      if (!response1.ok) {
+        const errorData = await response1.json();
+        console.error("Error response from CreatePost:", errorData);
+        throw new Error("Failed to post NGO details");
+      }
 
       const response2 = await fetch("http://localhost:1200/Post/register-ngo", {
         method: "POST",
@@ -101,7 +110,11 @@ function Post() {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!response2.ok) throw new Error("Failed to register NGO");
+      if (!response2.ok) {
+        const errorData = await response2.json();
+        console.error("Error response from register-ngo:", errorData);
+        throw new Error("Failed to register NGO");
+      }
 
       alert("NGO Registration Successful!");
     } catch (error) {
@@ -110,7 +123,6 @@ function Post() {
     }
   };
 
-  
   return (
     <div className="w-4/5 mx-auto max-w-4xl py-10">
       <div className="text-mine-shaft-200 m-2 text-2xl font-semibold">Post NGO</div>
@@ -130,24 +142,23 @@ function Post() {
 
       <div className="grid grid-cols-2 gap-10 mt-7 m-8 mx-30">
         <InputWithLabel label="Organization Name" type="text" id="name" placeholder="Enter your Organization Name" value={formData.name} required onChange={handleChange} />
-        <InputWithLabel label="Email" type="email" id="email"placeholder="Enter your email" value={formData.email} required onChange={handleChange} />
+        <InputWithLabel label="Email" type="email" id="email" placeholder="Enter your email" value={formData.email} required onChange={handleChange} />
         <InputWithLabel label="Phone Number" type="tel" id="phone" placeholder="Enter your phone number" value={formData.phone} required onChange={handleChange} />
         <InputWithLabel label="Reference ID" type="text" id="referenceId" placeholder="Enter reference ID" value={formData.referenceId} required onChange={handleChange} />
         <InputWithLabel label="Legal Business Name" type="text" id="legalBusinessName" placeholder="Enter legal business name" value={formData.legalBusinessName} required onChange={handleChange} />
 
-
-        <SimpleSelect 
-        value={formData.businessType} 
-        onChange={(value) => setFormData((prev) => ({ ...prev, businessType: value }))} 
+        <SimpleSelect
+          value={formData.businessType}
+          onChange={(value) => setFormData((prev) => ({ ...prev, businessType: value }))}
         />
 
         <InputWithLabel label="Contact Name" type="text" id="contactName" placeholder="Enter contact person's name" value={formData.contactName} required onChange={handleChange} />
-        <InputWithLabel label="Street Address 1" type="text" id="address.street1"  placeholder="Enter street address" value={formData.address.street1} required onChange={handleChange} />
+        <InputWithLabel label="Street Address 1" type="text" id="address.street1" placeholder="Enter street address" value={formData.address.street1} required onChange={handleChange} />
         <InputWithLabel label="Street Address 2" type="text" id="address.street2" placeholder="Enter additional address info" value={formData.address.street2} required onChange={handleChange} />
-        <InputWithLabel label="City" type="text" id="address.city"  placeholder="Enter city" value={formData.address.city} required onChange={handleChange} />
-        <InputWithLabel label="State" type="text" id="address.state"  placeholder="Enter state" value={formData.address.state} required onChange={handleChange} />
+        <InputWithLabel label="City" type="text" id="address.city" placeholder="Enter city" value={formData.address.city} required onChange={handleChange} />
+        <InputWithLabel label="State" type="text" id="address.state" placeholder="Enter state" value={formData.address.state} required onChange={handleChange} />
         <InputWithLabel label="Postal Code" type="text" id="address.postal_code" placeholder="Enter postal code" value={formData.address.postal_code} required onChange={handleChange} />
-        <InputWithLabel label="Country" type="text" id="address.country"  placeholder="Enter country" value={formData.address.country} required onChange={handleChange} />
+        <InputWithLabel label="Country" type="text" id="address.country" placeholder="Enter country" value={formData.address.country} required onChange={handleChange} />
 
         <InputWithLabel label="PAN" type="text" id="pan" placeholder="Enter PAN number" value={formData.pan} required onChange={handleChange} />
         <InputWithLabel label="GST Number" type="text" id="gst" placeholder="Enter GST number" value={formData.gst} required onChange={handleChange} />
@@ -158,14 +169,12 @@ function Post() {
         <InputWithLabel label="Contact Person Email" type="email" id="contactDetails.email" placeholder="Enter contact person's email" value={formData.contactDetails.email} required onChange={handleChange} />
         <InputWithLabel label="Contact Person Number" type="tel" id="contactDetails.contact" placeholder="Enter contact person's phone number" value={formData.contactDetails.contact} required onChange={handleChange} />
 
-  
-        
-        <BasicSelect 
-        value={formData.contactDetails.type} 
-        onChange={(value) => setFormData((prev) => ({ 
-        ...prev, 
-        contactDetails: { ...prev.contactDetails, type: value } 
-        }))} 
+        <BasicSelect
+          value={formData.contactDetails.type}
+          onChange={(value) => setFormData((prev) => ({
+            ...prev,
+            contactDetails: { ...prev.contactDetails, type: value }
+          }))}
         />
 
         <InputWithLabel label="Contact Reference ID" type="text" id="contactDetails.reference_id" placeholder="Enter contact reference ID" value={formData.contactDetails.reference_id} required onChange={handleChange} />
@@ -178,12 +187,9 @@ function Post() {
       </div>
     </div>
   );
-
 }
 
 export default Post;
-
-
 
 // function Post() {
 //   return (
