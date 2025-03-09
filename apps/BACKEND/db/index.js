@@ -32,10 +32,15 @@ const paymentSchema = new mongoose.Schema({
       type: String,
       
     },
+    
     razorpay_signature: {
       type: String,
       
     },
+
+    amount:{
+      type: Number, 
+    }
   });
 
 const PostSchema = new mongoose.Schema({
@@ -66,6 +71,7 @@ const NGOSchema = new mongoose.Schema({
   legalBusinessName: String,
   businessType: String,
   contactName: String,
+  ngoId: { type: mongoose.Schema.Types.ObjectId, ref: "create_post", required: true }, // 🔹 Reference to NGO
   address: {
     street1: String,
     street2: String,
@@ -84,6 +90,7 @@ const NGOSchema = new mongoose.Schema({
   fundAccountId: String,
   contactId: String,
   contactDetails: ContactDetailsSchema,
+  
 });
 
 const Organization = mongoose.model("Organization", OrganizationSchema);
