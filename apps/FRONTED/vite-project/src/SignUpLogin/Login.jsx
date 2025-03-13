@@ -36,6 +36,10 @@ function Login() {
 
       if (response.ok) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("donor", JSON.stringify({ name: data.name, email: data.email }));
+
+        console.log("Stored donor:", localStorage.getItem("donor"));
+
         setMessage("Login successful!");
         setMessageType("success"); // Ensure it's set properly
         
