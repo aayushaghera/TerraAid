@@ -29,6 +29,49 @@ function NGOCard({ ngo }) {
     }
 
     try {
+      // Send donation details to backend after successful payment
+      await fetch("http://localhost:1200/Administrator/save-donation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ngoId: ngo._id,  
+          ngoName: ngo.Name,  
+          amount: Number(amount),
+        }),
+    });
+    
+    } catch (error) {
+      console.error("Error saving donation:", error);
+    }
+
+    console.log("Sending donation data:", {
+      ngoId: ngo._id, 
+      ngoName: ngo.Name,
+      donorEmail: donor.email,
+      donorName: donor.name,
+      amount: Number(amount),
+    });
+    
+
+    try {
+      // Send donation details to the NEW API endpoint
+      await fetch("http://localhost:1200/Administrator/save-donation-record", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ngoId: ngo._id,
+          ngoName: ngo.Name,
+          donorEmail: donor.email,
+          donorName: donor.name,
+          amount: Number(amount),
+        }),
+      });
+    } catch (error) {
+      console.error("Error storing donation record:", error);
+    }
+  
+
+    try {
       const orderResponse = await fetch("http://localhost:1200/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
