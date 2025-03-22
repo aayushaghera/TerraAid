@@ -71,7 +71,9 @@ router.post("/donor-login", async (req, res) => {
         const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
         res.json({
-            token: token
+            token: token,
+            name: donor.name,  // ✅ Include donor's name
+            email: donor.email  // ✅ Include donor's email
         });
     } else {
         res.status(401).json({
