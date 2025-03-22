@@ -93,11 +93,35 @@ const NGOSchema = new mongoose.Schema({
   
 });
 
+const fundraiserSchema = new mongoose.Schema({
+  ngoId: { type: String, unique: true, required: true }, // Ensure ngoId is required
+  name: { type: String, required: true },
+  raisedAmount: { type: Number, default: 0 },
+});
+
+
+const aayush = new mongoose.Schema({
+  donorName: { type: String, required: true },
+  donorEmail: { type: String, required: true },
+  amount: { type: Number, required: true },
+  date: { type: Date, default: Date.now }
+});
+
+const DonationRecordSchema = new mongoose.Schema({
+  ngoId: { type: String, required: true, unique: true },  
+  ngoName: { type: String, required: true },
+  donors: [aayush] // ✅ Store multiple donors inside an array
+});
+
+
 const Organization = mongoose.model("Organization", OrganizationSchema);
 const Donor = mongoose.model("Donor", DonorSchema);
 const Payment = mongoose.model("Payment", paymentSchema);
 const create_post = mongoose.model("post",PostSchema);
 const NGO = mongoose.model("NGO", NGOSchema);
+const Fundraiser = mongoose.model("Fundraiser", fundraiserSchema);
+const DonationRecord = mongoose.model("DonationRecord", DonationRecordSchema);
+
 
 module.exports = {
     Organization,
@@ -105,6 +129,8 @@ module.exports = {
     Payment,
     create_post,
     NGO,
+    Fundraiser,
+    DonationRecord,
     connectDB,
 };
 
