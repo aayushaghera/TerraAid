@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const { z } = require("zod");
 const { Fundraiser } = require('../db'); // Import User model from db/index.js
 const { DonationRecord } = require('../db');
+const {NGO} = require('../db');
+const { create_post } = require('../db');
 const router = Router();
 const axios = require("axios");
 const cors = require('cors');
@@ -65,7 +67,68 @@ router.post("/save-donation-record", async (req, res) => {
       res.status(500).json({ success: false, message: "Internal server error" });
     }
   });
+
+
+    router.get("/GetDonationRecord", async (req, res) => {
+      try {
+        const ngos = await DonationRecord.find();
+        res.json(ngos);
+      } catch (err) {
+        res.status(500).json({ message: "Error fetching NGOs", error: err.message });
+      }
+    });
   
+    router.get("/getNGOByPostId/:id", async (req, res) => {
+      try {
+        const ngo = await NGO.findOne({ ngoId: req.params.id }); // ✅ Query NGO schema
+        if (!ngo) {
+          return res.status(404).json({ message: "NGO not found for this Post" });
+        }
+        res.json(ngo);
+      } catch (error) {
+        res.status(500).json({ message: "Error fetching NGO", error: error.message });
+      }
+    });
+    
+    
+    router.get("/getPOSTByPostId/:id", async (req, res) => {
+      try {
+        const post = await create_post.findOne({ _id: req.params.id }); // ✅ Use `_id`
+        if (!post) {
+          return res.status(404).json({ message: "Post not found" });
+        }
+        res.json(post);
+      } catch (error) {
+        res.status(500).json({ message: "Error fetching post", error: error.message });
+      }
+    });
+
+    router.get("/getDonationHistory/:id", async (req, res) => {
+      try {
+        const History = await DonationRecord.findOne({ ngoId: req.params.id }); // ✅ Use `_id`
+        if (!History) {
+          return res.status(404).json({ message: "Post not found" });
+        }
+        res.json(History);
+      } catch (error) {
+        res.status(500).json({ message: "Error fetching post", error: error.message });
+      }
+    });
+
+    router.get("/getFundRaiser/:id", async (req, res) => {
+      try {
+        const Fund = await Fundraiser.findOne({ ngoId: req.params.id }); // ✅ Use `_id`
+        if (!Fund) {
+          return res.status(404).json({ message: "Post not found" });
+        }
+        res.json(Fund);
+      } catch (error) {
+        res.status(500).json({ message: "Error fetching post", error: error.message });
+      }
+    });
+
+
+    
   
 
 module.exports = router;
