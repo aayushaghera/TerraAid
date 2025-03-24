@@ -13,12 +13,16 @@ export function NGOList() {
 
   return (
     <div className="flex flex-wrap gap-20">
-      {ngoList.map((ngo, index) => (
+      {/* {ngoList.map((ngo, index) => (
         <NGOCard key={index} ngo={ngo} /> // Pass each NGO as a prop
-      ))}
+      ))} */}
+      {ngoList.map((ngo) => (
+  <NGOCard key={ngo._id} ngo={ngo} /> 
+  // Pass `_id` as part of `ngo` object
+))}
+
     </div>
   );
 }
 
 export default NGOList;
-
