@@ -12,9 +12,12 @@ function Header ()
     const location = useLocation();
 
     // If pathname is "/SignUp" or "/Login", return null (do not render header)
-   if (location.pathname === "/SignUp" || location.pathname === "/Login") {
+//    if (location.pathname === "/SignUp" || location.pathname === "/Login") {
+//     return null;
+//     }
+if (["/SignUp", "/Login", "/Admin"].includes(location.pathname)) {
     return null;
-    }
+}
 
     return(
     <div className="w-full bg-black px-6 text-white h-20 flex justify-between items-center bg-mine-shaft-950 ">
