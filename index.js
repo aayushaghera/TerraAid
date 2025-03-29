@@ -1,18 +1,25 @@
 
+const cors = require('cors'); // Import cors
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 dotenv.config(); 
 
 const { connectDB } = require('./apps/BACKEND/db');
-//const { razorpay } = require("./razorpay.js");
+
 
 const adminRouter = require('./apps/BACKEND/routes/admin');
 const userRouter = require('./apps/BACKEND/routes/user');
 const paymentRouter = require('./apps/BACKEND/routes/paymentRoutes');
-const { router: checkoutRouter } = require('./apps/BACKEND/Controllers/paymentController');
 
-// Import Razorpay instance from razorpay.js
+const PostRouter = require('./apps/BACKEND/routes/Post');
+
+const AdministratorRouter = require('./apps/BACKEND/routes/Administrator.js');
+
+const { router: checkoutRouter } = require('./apps/BACKEND/Controllers/paymentController');
+const { router : paymentverifyRouter} = require('./apps/BACKEND/Controllers/paymentController');
+
+
 const { instance } = require('./razorpay.js'); // Now importing from razorpay.js
 
 const { connect } = require('mongoose');
@@ -22,16 +29,24 @@ const PORT = 1200;
 
 connectDB();
 
+app.use(cors());
+
+
 // Middleware
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Routes
+
+
 app.use('/admin', adminRouter);
 app.use('/user', userRouter);
 app.use('/payment', paymentRouter);
 app.use("/api", checkoutRouter);
+app.use("/api",paymentverifyRouter);
+app.use("/Post",PostRouter);
+app.use("/Administrator",AdministratorRouter);
 
-// Start the server
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

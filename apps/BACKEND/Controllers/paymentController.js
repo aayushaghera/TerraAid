@@ -29,6 +29,7 @@ router.post('/checkout', async (req, res) => {
 
 
 router.post('/paymentVerification', async (req, res) => {
+    
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
     
@@ -39,7 +40,6 @@ router.post('/paymentVerification', async (req, res) => {
     });
 
     console.log(req.body);
-
     res.status(200).json({
         message: "Payment verified and details saved successfully",
     });

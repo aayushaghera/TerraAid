@@ -23,6 +23,7 @@ function NGODetails() {
   const { id } = useParams();
   const [postDetails, setPostDetails] = useState(null);
   const [ngoDetails, setNgoDetails] = useState(null);
+  const [fundraiserDetails, setfundraiserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -40,6 +41,12 @@ function NGODetails() {
         const ngoData = await ngoRes.json();
         if (!ngoRes.ok) throw new Error(ngoData.message || "Failed to fetch NGO");
         setNgoDetails(ngoData);
+
+       const fundraiserRes = await fetch(`http://localhost:1200/Administrator/getFundRaiser/${id}`);
+       const fundraiserData = await fundraiserRes.json();
+       if (!fundraiserRes.ok) throw new Error(fundraiserData.message || "Failed to fetch Data");
+        setfundraiserDetails(fundraiserData);
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -64,6 +71,20 @@ function NGODetails() {
       </div>
     </div>
   );
+
+  const parseCurrency = (value) => {
+    if (typeof value === 'number') return value;
+    if (!value) return 0;
+    
+    // Remove commas and convert to number
+    const num = parseFloat(value.toString().replace(/,/g, ''));
+    return isNaN(num) ? 0 : num;
+  };
+  
+  // Then calculate percentage
+  const progressPercentage = fundraiserDetails.raisedAmount
+    ? Math.round((parseCurrency(fundraiserDetails.raisedAmount) / parseCurrency(postDetails.Goal)) * 100)
+    : 0;
 
   return (
     <div className="min-h-screen bg-mine-shaft-950">
@@ -101,18 +122,29 @@ function NGODetails() {
                   Fundraising
                 </div>
               </div>
+
+              
               
               {/* Progress Bar */}
-              <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
+              {/* <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
                 <div 
                   className="bg-yellow-400 h-3 rounded-full" 
-                  style={{ width: '45%' }}
+                  style={{ width: `${progressPercentage}%` }}
                 ></div>
+              </div> */}
+
+              <div className="relative h-2 bg-mine-shaft-800 rounded-full overflow-hidden">
+                <div 
+                  className="absolute top-0 left-0 h-full bg-bright-sun-400 rounded-full"
+                  style={{
+                  width: `${progressPercentage}%`,
+                  transition: 'width 1s ease-out'
+                  }}
+               ></div>
               </div>
               
               <div className="flex justify-between text-sm text-gray-600 mb-6">
-                <span>₹87,500 raised</span>
-                <span>45% of goal</span>
+              <span>Raised: ₹{(fundraiserDetails?.raisedAmount || 0).toLocaleString()}</span>
               </div>
               
               {/* Action Buttons */}

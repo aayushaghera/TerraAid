@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '@mantine/tiptap/styles.css';
 import '@mantine/dropzone/styles.css';
-
+import ProtectedRoute from "./ProtectedRoute"; 
 import HomePage from "./Pages/HomePage";
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
@@ -16,6 +16,10 @@ import Footer from "./Footer/Footer";
 import UserProfile from "./Pages/UserProfile";
 import CreatePost from "./Pages/CreatePost";
 import SignUpPage from "./Pages/SignUpPage";
+import Dashboard from "./Pages/Dashboard";
+import NGODetails from "./Pages/NGODetails";
+import AdminPanel from "./Pages/AdminPanel";
+import Contact from "./Pages/Contact";
 
 
 const App = () => {
@@ -106,12 +110,28 @@ const App = () => {
       <button onClick={checkoutHandler} className="donate-button">
         Donate
       </button> */}
+      {/* <Route path="/" element={<HomePage />}></Route>
       <Route path="/Causes" element={<Causes></Causes>}></Route>
       <Route path="/UserProfile" element ={<UserProfile></UserProfile>}></Route>
       <Route path="/CreatePost"  element ={<CreatePost></CreatePost>}></Route>
       <Route path="/SignUp" element = {<SignUpPage></SignUpPage>}></Route>
       <Route path="/Login" element = {<SignUpPage></SignUpPage>}></Route>
-      <Route path="*" element={<HomePage></HomePage>}></Route>
+      <Route path="/Dashboard" element = {<Dashboard></Dashboard>}></Route>
+      <Route path="/ngo/:id" element={<NGODetails />} /> 
+      <Route path="/admin" element={<AdminPanel />} />  */}
+     
+  <Route path="/" element={<HomePage />} />
+  <Route path="/Causes" element={<ProtectedRoute element={<Causes />}  allowedRoles={["donor"]} />} />
+  <Route path="/UserProfile" element={<ProtectedRoute element={<UserProfile />} allowedRoles={["donor", "organization", "admin"]} />} />
+  <Route path="/CreatePost" element={<ProtectedRoute element={<CreatePost />} allowedRoles={["organization"]} />} />
+  <Route path="/Dashboard" element={<ProtectedRoute element={<Dashboard />} allowedRoles={["donor", "organization", "admin"]} />} />
+  <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} allowedRoles={["admin"]} />} />
+  <Route path="/ngo/:id" element={<NGODetails />} /> {/* Public route */}
+  <Route path ="/Contact" element = {<Contact></Contact>}/>
+  <Route path="/SignUp" element={<SignUpPage />} />
+  <Route path="/Login" element={<SignUpPage />} />
+
+      {/* <Route path="*" element={<HomePage></HomePage>}></Route> */}
       </Routes>
        <Footer></Footer>
       </BrowserRouter>  

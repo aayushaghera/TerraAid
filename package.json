@@ -25,6 +25,9 @@
     "axios": "^1.7.9",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "razorpay": "^2.9.5"
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
+    "razorpay": "^2.9.5",
+    "recharts": "^2.15.1"
   }
 }
