@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Router } = require("express");
 const jwt = require("jsonwebtoken");
 const { Donor } = require("../db"); // Assuming Donor model exists
+const {ContactMessage} = require("../db");
 const router = Router();
 const { z } = require("zod");
 
@@ -81,5 +82,25 @@ router.post("/donor-login", async (req, res) => {
         });
     }
 });
+
+router.post("/contact", async (req, res) => {
+    try {
+      const { firstName, lastName, email, subject, message } = req.body;
+  
+      // Validate input fields
+      if (!firstName || !lastName || !email || !subject || !message) {
+        return res.status(400).json({ error: "All fields are required." });
+      }
+  
+      // Save message to MongoDB
+      const newMessage = new ContactMessage({ firstName, lastName, email, subject, message });
+      await newMessage.save();
+  
+      res.status(200).json({ message: "Your message has been sent successfully!" });
+    } catch (error) {
+      console.error("Error saving message:", error);
+      res.status(500).json({ error: "Internal Server Error. Please try again." });
+    }
+  });
 
 module.exports = router;

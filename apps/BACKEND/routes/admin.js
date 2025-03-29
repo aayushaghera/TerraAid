@@ -64,7 +64,9 @@ router.post("/organization-login", async (req, res) => {
         const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
         res.json({
-            token: token
+            token: token,
+            name: organization.name,  // ✅ Include donor's name
+            email: organization.email
         });
     } else {
         res.status(401).json({
