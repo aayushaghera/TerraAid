@@ -13,7 +13,7 @@ const NGOFundraisingReport = ({ ngo }) => {
   const { ngoDetails, fundraiserData, postDetails, donors: donationHistory } = ngo;
 
   // Calculate the progress percentage
-  const progressPercentage = Math.round((fundraiserData.raisedAmount / postDetails.Goal) * 100);
+  //const progressPercentage = Math.round((fundraiserData.raisedAmount / postDetails.Goal) * 100);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
