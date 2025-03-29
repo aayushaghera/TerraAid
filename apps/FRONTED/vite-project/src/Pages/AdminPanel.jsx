@@ -3,6 +3,7 @@ import { IconProgressHelp, IconBell, IconSettings } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import ProfileMenu from '../Header/ProfileMenu';
 import NGOFundraisingReport from '../Admin/NGOFundraisingReport';
+import NGO from "../Admin/NGO";
 
 function AdminPanel() {
     return (
@@ -44,7 +45,7 @@ function AdminPanel() {
             {/* ✅ Divider below Header */}
             <Divider color="#5a5a5a" size="xs" mx="md" />
              <div className='mt-3'>
-            <NGOFundraisingReport></NGOFundraisingReport>
+            <NGO></NGO>
             </div>
         </div>
     );
