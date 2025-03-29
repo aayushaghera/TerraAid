@@ -15,7 +15,7 @@ function Header ()
 //    if (location.pathname === "/SignUp" || location.pathname === "/Login") {
 //     return null;
 //     }
-if (["/SignUp", "/Login", "/Admin"].includes(location.pathname)) {
+if (["/SignUp", "/Login", "/Admin", "/"].includes(location.pathname)) {
     return null;
 }
 
