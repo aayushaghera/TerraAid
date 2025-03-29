@@ -5,6 +5,8 @@ import Working from "../LandingPage/Working";
 import Testimonials from "../LandingPage/Testimonials";
 import Footer from "../Footer/Footer";
 
+import { IconProgressHelp } from '@tabler/icons-react';
+
 function HomePage()
 {
       return(
