@@ -21,48 +21,87 @@ TerraAid is a **powerful MERN-stack donation platform** 🎯💻 that connects *
 
 ---
 
-## 🛠️ Tech Stack  
+## 🚀 Features
 
-### **Frontend:**  
-- ⚛️ **React.js** (Modern UI Development)  
-- 🎨 **Tailwind CSS** & **Mantine UI** (Elegant & Responsive UI)  
-
-### **Backend:**  
-- 🟢 **Node.js** (Server-side logic)  
-- 🚀 **Express.js** (Fast API Development)  
-- 🔐 **JWT Authentication** (Secure Access)  
-
-### **Database:**  
-- 🍃 **MongoDB** (NoSQL Database for scalable data storage)  
-
-### **Payment Gateway:**  
-- 💳 **Razorpay** (Seamless online donation processing)  
+- ✅ **Effortless NGO & Donor Registration**
+- 🔎 **Smart Filtering & State-based NGO Search**
+- 💰 **Transparent Fundraising with Real-time Progress Tracking**
+- 📊 **Powerful Donation Analytics with Monthly & Yearly Reports**
+- 💳 **Secure Payments via Razorpay**
+- 📈 **Admin Dashboard for Impact Insights**
+- 📄 **Automated Monthly Reports for NGOs**
 
 ---
 
-## 💳 Razorpay Integration – Seamless Donation Processing  
+## ⚡ Tech Stack
 
-TerraAid ensures **safe & hassle-free donations** 💖💸 using **Razorpay's secure payment gateway** 🔐💳.  
-
-🛠️ **How it works?**  
-1️⃣ **Donor selects an NGO campaign** & enters donation amount.  
-2️⃣ **Frontend requests backend** to generate an order using **Razorpay API**.  
-3️⃣ **Backend creates order ID** & sends it to the frontend.  
-4️⃣ **Razorpay’s secure UI pops up** allowing donors to complete payments via **UPI, Cards, Net Banking, or Wallets**.  
-5️⃣ **Upon successful payment**, Razorpay sends a confirmation **webhook** to the backend.  
-6️⃣ **Donation is recorded in MongoDB**, & both **donor & NGO get notifications**.  
-
-> 🔒 **Safe | Fast | Reliable**  
-
----
-
-## 📸 Screenshots  
-
-🚀 *Coming Soon!*  
+<p align="center">
+  <img src="https://img.shields.io/badge/⚛️-React.js-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/🟢-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/🚀-Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/🍃-MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
+  <img src="https://img.shields.io/badge/💳-Razorpay-02042B?style=for-the-badge&logo=razorpay&logoColor=white" />
+  <img src="https://img.shields.io/badge/📊-Chart.js-F5788D?style=for-the-badge&logo=chart.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/🎨-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  <img src="https://img.shields.io/badge/🎨-Mantine_UI-339af0?style=for-the-badge&logo=mantine&logoColor=white" />
+</p>
 
 ---
 
-## 🛠️ Installation & Setup  
+## 🎯 Getting Started
 
- 🚀 *Coming Soon!* 
+### **1️⃣ Clone the Repository**
+```sh
+git clone https://github.com/yourusername/TerraAid.git
+cd TerraAid
+```
 
+### **2️⃣ Install Dependencies**
+```sh
+cd backend && npm install
+cd ../frontend && npm install
+```
+
+### **3️⃣ Set Up Environment Variables**
+Create a `.env` file in the backend folder:
+```sh
+MONGO_URI=your_mongodb_connection_string
+RAZORPAY_KEY_ID=your_razorpay_key
+RAZORPAY_SECRET=your_razorpay_secret
+```
+
+### **4️⃣ Start the Project**
+**Run Backend:**
+```sh
+cd backend && npm start
+```
+**Run Frontend:**
+```sh
+cd frontend && npm start
+```
+
+---
+
+## 📸 Visuals
+
+| Home Page | NGO Listing | Donation Page |
+|-----------|------------|--------------|
+| ![Home](https://via.placeholder.com/300) | ![NGO](https://via.placeholder.com/300) | ![Donate](https://via.placeholder.com/300) |
+
+---
+
+## 📜 License
+This project is **open-source** and available under the [MIT License](LICENSE).
+
+---
+
+## 🌟 Support
+If you like this project, **give it a star ⭐** and share it with others! 🚀
+
+---
+
+## 📞 Contact
+
+**Got Questions? Need Help?** 🤔  
+Feel free to reach out! You can contact me via:  
+📩 **Email:** [aayushaghera@gmail.com](mailto:aayushaghera@gmail.com)
