@@ -80,16 +80,30 @@ cd backend && npm start
 cd frontend && npm start
 ```
 
+## 🎥 Live Demo
+## [![YouTube](https://img.shields.io/badge/▶️-Watch%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/IhwNTsTrnD8)
+
+
+
+
+---
+
 ## 📸 **Visuals**
 
 ### 🏠 **Home Page**  
-![Home Page](https://github.com/user-attachments/assets/988eaebd-5df4-4f86-a5b2-9451a6f01c29)
+![Image](https://github.com/user-attachments/assets/6f3e71fd-fe29-4511-a507-a1390a01a0f9)
 
 ### 🌍 **NGO Listing**  
 ![NGO Listing](https://github.com/user-attachments/assets/988eaebd-5df4-4f86-a5b2-9451a6f01c29)
 
-### 💰 **Donation Page**  
+### 💰 **Report Page**  
 ![Donation Page](https://github.com/user-attachments/assets/156a5321-75f0-4141-b6e6-a6ab3ec6613d)
+
+### 💰 **CreatePost Page**  
+![Image](https://github.com/user-attachments/assets/ffa5e5ac-37b1-4970-bbed-bdfa71b21412)
+
+### 💰 **Donation Page**  
+![Image](https://github.com/user-attachments/assets/0ae313c1-261c-4842-ba17-049dbb8ea391)
 
 ---
 
@@ -97,6 +111,7 @@ cd frontend && npm start
 This project is **open-source** and available under the [MIT License](LICENSE).
 
 ---
+
 
 ## 🌟 Support
 If you like this project, **give it a star ⭐** and share it with others! 🚀
