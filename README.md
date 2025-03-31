@@ -52,7 +52,7 @@ TerraAid is a **powerful MERN-stack donation platform** 🎯💻 that connects *
 
 ### **1️⃣ Clone the Repository**
 ```sh
-git clone https://github.com/yourusername/TerraAid.git
+git clone https://github.com/aayushaghera/TerraAid.git
 cd TerraAid
 ```
 
