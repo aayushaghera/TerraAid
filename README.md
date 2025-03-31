@@ -80,13 +80,16 @@ cd backend && npm start
 cd frontend && npm start
 ```
 
----
+## 📸 **Visuals**
 
-## 📸 Visuals
+### 🏠 **Home Page**  
+![Home Page](https://github.com/user-attachments/assets/988eaebd-5df4-4f86-a5b2-9451a6f01c29)
 
-| Home Page | NGO Listing | Donation Page |
-|-----------|------------|--------------|
-| ![Image](https://github.com/user-attachments/assets/988eaebd-5df4-4f86-a5b2-9451a6f01c29) | ![Image](https://github.com/user-attachments/assets/156a5321-75f0-4141-b6e6-a6ab3ec6613d)| ![Donate](https://via.placeholder.com/300) |
+### 🌍 **NGO Listing**  
+![NGO Listing](https://github.com/user-attachments/assets/988eaebd-5df4-4f86-a5b2-9451a6f01c29)
+
+### 💰 **Donation Page**  
+![Donation Page](https://github.com/user-attachments/assets/156a5321-75f0-4141-b6e6-a6ab3ec6613d)
 
 ---
 
