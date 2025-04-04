@@ -113,6 +113,7 @@ function NGOCard({ ngo }) {
 
       const orderData = await orderResponse.json();
       const razor = new window.Razorpay({
+        key: "rzp_test_KR6R4VPrRlvAcH",
         amount: orderData.order.amount,
         currency: "INR",
         name: ngo.Name,
@@ -153,9 +154,9 @@ function NGOCard({ ngo }) {
   }
 
    //✅ Hide the NGO card if raisedAmount is greater than or equal to Goal
-   if (ngoDetails?.raisedAmount >= ngo.Goal) {
-    return null;
-  }
+  //  if (ngoDetails?.raisedAmount >= ngo.Goal) {
+  //   return null;
+  // }
 
   return (
     <div className="bg-mine-shaft-900 p-4 w-72 m-2 mt-5 flex flex-col gap-2 cursor-pointer shadow-md rounded-lg">
